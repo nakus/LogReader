@@ -37,39 +37,95 @@ namespace WindowsFormsApp1
 
         private void button1_Click(object sender, EventArgs e)
         {
-            string line;
-            string src1;
-            int counter = 1;
-            int i = 0;
+            string line; //Line in file
+            
+            //Search tearms holders
+            string src1 = "";
+            string src2 = "";
+            string src3 = "";
 
+            int counter = 1; //Keeps location of line in file
+            int i = 0;
+            
+            //Total counters for search terms
+            int isfailedCounter = 0;
+            int isHDDCounter = 0;
+            int isUScounter = 0;
+
+            bool isfailed = false;
+            bool isHDD = false;
+
+            if (checkBoxHDD.Checked == true)
+                src2 = "HDD";
 
             if (checkBoxfailed.Checked == true)
+                src1 = "failed";
+            
+            if (checkBoxUserSrc.Checked == true)
             {
+                src3 = textBoxUserSrc.Text;
+            }
+            
                 
                 using (StreamReader sr = new StreamReader(richTextBoxFileName.Text))
                 {
                     richTextBoxReader.Text = " ";
                     while ((line = sr.ReadLine()) != null)
                     {
-                        if (line.Contains("failed"))
+                        //Checks if failed is located
+                        if ((checkBoxfailed.Checked && line.Contains(src1)))// || line.Contains(src2))
                         {
                             
-                            richTextBoxReader.Text = richTextBoxReader.Text + "Failed at: " + counter.ToString() + " || "+ line + "\n\n"; 
-
+                            richTextBoxReader.Text = richTextBoxReader.Text + "Failed at: " + counter.ToString() + " || "+ line + "\n\n";
+                            isfailed = true;
                             counter++;
+                        isfailedCounter++;
                         }
-                        else
-                        counter++;
-                    }
+                        //Checks if HDD is located
+                         else if ((checkBoxHDD.Checked && line.Contains(src2)))
+                        {
+                            richTextBoxReader.Text = richTextBoxReader.Text + "HDD at: " + counter.ToString() + " || " + line + "\n\n";
+                        isHDD = true;
+                            counter++;
+                        isHDDCounter++;
+                        }
+                        else if ((checkBoxUserSrc.Checked && line.Contains(src3)))
+                        {
+                            richTextBoxReader.Text = richTextBoxReader.Text + src3 + " found at: " + counter.ToString() + " || " + line + "\n\n";
+                            isfailed = true;
+                            counter++;
+                            isUScounter++;
+                        }
+                        else 
+                            counter++;
 
+                        //If nothing is checked, display whole report
+                        if (!checkBoxfailed.Checked && !checkBoxHDD.Checked && !checkBoxUserSrc.Checked)
+                         {
+                                SetText(sr.ReadToEnd());
+                         }
+  
+                   
+                    } //end While traversing file
+
+                if (checkBoxfailed.Checked)
+                {
+                    richTextBoxReader.Text = richTextBoxReader.Text + "'failed found: " + isfailedCounter + " times\n";
                 }
-            }
-            
-           
-            
-            
-         
+                if (checkBoxHDD.Checked)
+                {
+                    richTextBoxReader.Text = richTextBoxReader.Text + "'HDD found: " + isHDDCounter + " times\n";
+                }
+                if (checkBoxUserSrc.Checked)
+                {
+                    richTextBoxReader.Text = richTextBoxReader.Text + src3 + " found: " + isUScounter + " times\n";
+                }
 
+
+
+                sr.Close();
+                } //end file
+               
             
             
         }

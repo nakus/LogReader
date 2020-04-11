@@ -34,6 +34,9 @@
             this.checkBoxfailed = new System.Windows.Forms.CheckBox();
             this.richTextBoxReader = new System.Windows.Forms.RichTextBox();
             this.richTextBoxFileName = new System.Windows.Forms.RichTextBox();
+            this.checkBoxHDD = new System.Windows.Forms.CheckBox();
+            this.checkBoxUserSrc = new System.Windows.Forms.CheckBox();
+            this.textBoxUserSrc = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // button1
@@ -88,11 +91,40 @@
             this.richTextBoxFileName.TabIndex = 7;
             this.richTextBoxFileName.Text = "";
             // 
+            // checkBoxHDD
+            // 
+            this.checkBoxHDD.AutoSize = true;
+            this.checkBoxHDD.Location = new System.Drawing.Point(23, 190);
+            this.checkBoxHDD.Name = "checkBoxHDD";
+            this.checkBoxHDD.Size = new System.Drawing.Size(60, 21);
+            this.checkBoxHDD.TabIndex = 8;
+            this.checkBoxHDD.Text = "HDD";
+            this.checkBoxHDD.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxUserSrc
+            // 
+            this.checkBoxUserSrc.AutoSize = true;
+            this.checkBoxUserSrc.Location = new System.Drawing.Point(23, 217);
+            this.checkBoxUserSrc.Name = "checkBoxUserSrc";
+            this.checkBoxUserSrc.Size = new System.Drawing.Size(18, 17);
+            this.checkBoxUserSrc.TabIndex = 9;
+            this.checkBoxUserSrc.UseVisualStyleBackColor = true;
+            // 
+            // textBoxUserSrc
+            // 
+            this.textBoxUserSrc.Location = new System.Drawing.Point(47, 217);
+            this.textBoxUserSrc.Name = "textBoxUserSrc";
+            this.textBoxUserSrc.Size = new System.Drawing.Size(177, 22);
+            this.textBoxUserSrc.TabIndex = 10;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.textBoxUserSrc);
+            this.Controls.Add(this.checkBoxUserSrc);
+            this.Controls.Add(this.checkBoxHDD);
             this.Controls.Add(this.richTextBoxFileName);
             this.Controls.Add(this.richTextBoxReader);
             this.Controls.Add(this.checkBoxfailed);
@@ -113,6 +145,9 @@
         private System.Windows.Forms.CheckBox checkBoxfailed;
         private System.Windows.Forms.RichTextBox richTextBoxReader;
         private System.Windows.Forms.RichTextBox richTextBoxFileName;
+        private System.Windows.Forms.CheckBox checkBoxHDD;
+        private System.Windows.Forms.CheckBox checkBoxUserSrc;
+        private System.Windows.Forms.TextBox textBoxUserSrc;
     }
 }
 
