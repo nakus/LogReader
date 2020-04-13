@@ -8,7 +8,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
-using System.Drawing;
 using System.Security;
 
 namespace WindowsFormsApp1
@@ -28,6 +27,7 @@ namespace WindowsFormsApp1
         private void SetText(string text)
         {
             richTextBoxReader.Text = text;
+            //richTextBoxReader1.Text = text;
         }
 
         private void SetFileName(string fileName)
@@ -35,16 +35,23 @@ namespace WindowsFormsApp1
             richTextBoxFileName.Text = fileName;
         }
 
+        //Button to run report with/out search terms selected
         private void button1_Click(object sender, EventArgs e)
         {
             string line; //Line in file
-            
+            string line1; //Testing Checkbox List
             //Search tearms holders
             string src1 = "";
             string src2 = "";
             string src3 = "";
+            
+            List<string> searchItems = new List<string>();
+            List<string> fileLog = new List<string>();
 
-            int counter = 1; //Keeps location of line in file
+            //Keeps location of line in file
+            int counter = 1; 
+            int counter1 = 1;
+
             int i = 0;
             
             //Total counters for search terms
@@ -52,47 +59,87 @@ namespace WindowsFormsApp1
             int isHDDCounter = 0;
             int isUScounter = 0;
 
-            bool isfailed = false;
-            bool isHDD = false;
+            ///////Using Check Box List Items ~~~~~ TEST~~~~~/////////////
+            foreach (object itemChecked in checkedListBoxST.CheckedItems)
+            {
+                searchItems.Add(itemChecked.ToString());
 
-            if (checkBoxHDD.Checked == true)
+                
+            }
+         
+            
+            using (StreamReader xr = new StreamReader(richTextBoxFileName.Text))
+            {
+                richTextBoxReader1.Text = "";
+                while ((line1 = xr.ReadLine()) != null)
+                {
+                    foreach(string item in searchItems)
+                    {
+                        if (line1.Contains(item))
+                            {
+                                richTextBoxReader1.Text = richTextBoxReader1.Text +
+                                item + "found at: " + counter1.ToString() + " || " + 
+                                line1 + "\n\n";
+                                counter1++;
+                            }
+                        else
+                        {
+                            counter1++;
+                        }
+                     
+                    }
+                   
+                    
+                        
+                }///end while reading file
+
+            }///End using StreamReader
+            
+
+            ///////End of using check box list
+        
+
+
+            if (checkBoxHDD.Checked)
                 src2 = "HDD";
 
-            if (checkBoxfailed.Checked == true)
+            if (checkBoxfailed.Checked)
                 src1 = "failed";
             
-            if (checkBoxUserSrc.Checked == true)
+            if (checkBoxUserSrc.Checked)
             {
                 src3 = textBoxUserSrc.Text;
             }
-            
-                
+           
+
+         //Using the 'basic check boxes'// 
                 using (StreamReader sr = new StreamReader(richTextBoxFileName.Text))
-                {
+                { 
                     richTextBoxReader.Text = " ";
                     while ((line = sr.ReadLine()) != null)
                     {
-                        //Checks if failed is located
-                        if ((checkBoxfailed.Checked && line.Contains(src1)))// || line.Contains(src2))
+                        //Checks if failed is checked and searches for it
+                        if ((checkBoxfailed.Checked && line.Contains(src1)))
                         {
                             
                             richTextBoxReader.Text = richTextBoxReader.Text + "Failed at: " + counter.ToString() + " || "+ line + "\n\n";
-                            isfailed = true;
+                            
                             counter++;
                         isfailedCounter++;
                         }
-                        //Checks if HDD is located
+                        //Checks if HDD is checked and searches for it
                          else if ((checkBoxHDD.Checked && line.Contains(src2)))
                         {
                             richTextBoxReader.Text = richTextBoxReader.Text + "HDD at: " + counter.ToString() + " || " + line + "\n\n";
-                        isHDD = true;
+                        
                             counter++;
                         isHDDCounter++;
                         }
+                        //Checks if User defined search term is checked and searches for it
                         else if ((checkBoxUserSrc.Checked && line.Contains(src3)))
                         {
                             richTextBoxReader.Text = richTextBoxReader.Text + src3 + " found at: " + counter.ToString() + " || " + line + "\n\n";
-                            isfailed = true;
+                            
                             counter++;
                             isUScounter++;
                         }
@@ -107,6 +154,9 @@ namespace WindowsFormsApp1
   
                    
                     } //end While traversing file
+          //Basic check boxes/////////////////
+
+         //Counters for each search term//
 
                 if (checkBoxfailed.Checked)
                 {
@@ -120,20 +170,23 @@ namespace WindowsFormsApp1
                 {
                     richTextBoxReader.Text = richTextBoxReader.Text + src3 + " found: " + isUScounter + " times\n";
                 }
+        ///////////////////////////////////
 
 
+                sr.Close(); // Closes file
 
-                sr.Close();
-                } //end file
+
+                } //end StreamReader
                
-            
-            
-        }
+        }//End function
+
+
         private void openFileDialog1_FileOk_1(object sender, CancelEventArgs e)
         {
 
         }
-
+        
+        //Opens the file or log
         private void button2_Click(object sender, EventArgs e)
         {
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
@@ -142,6 +195,7 @@ namespace WindowsFormsApp1
                 {
                     var sr = new StreamReader(openFileDialog1.FileName);
                     SetText(sr.ReadToEnd());
+                    //richTextBoxReader1.Text = sr.ReadToEnd();
                     SetFileName(openFileDialog1.FileName);
                 }
                 catch (SecurityException ex)
@@ -155,5 +209,24 @@ namespace WindowsFormsApp1
         {
 
         }
+
+        //Exports results to a file
+        private void bSaveResults_Click(object sender, EventArgs e)
+        {
+            
+            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+            saveFileDialog1.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
+            saveFileDialog1.FilterIndex = 2;
+            saveFileDialog1.RestoreDirectory = true;
+            
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                string fileName = saveFileDialog1.FileName;
+                System.IO.File.WriteAllText(fileName, richTextBoxReader.Text);
+            }
+            
+        }
+
+        
     }
 }

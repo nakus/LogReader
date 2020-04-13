@@ -37,11 +37,14 @@
             this.checkBoxHDD = new System.Windows.Forms.CheckBox();
             this.checkBoxUserSrc = new System.Windows.Forms.CheckBox();
             this.textBoxUserSrc = new System.Windows.Forms.TextBox();
+            this.bSaveResults = new System.Windows.Forms.Button();
+            this.checkedListBoxST = new System.Windows.Forms.CheckedListBox();
+            this.richTextBoxReader1 = new System.Windows.Forms.RichTextBox();
             this.SuspendLayout();
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(10, 45);
+            this.button1.Location = new System.Drawing.Point(10, 13);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(111, 39);
             this.button1.TabIndex = 1;
@@ -56,7 +59,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(127, 45);
+            this.button2.Location = new System.Drawing.Point(127, 13);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(97, 39);
             this.button2.TabIndex = 3;
@@ -67,7 +70,7 @@
             // checkBoxfailed
             // 
             this.checkBoxfailed.AutoSize = true;
-            this.checkBoxfailed.Location = new System.Drawing.Point(23, 163);
+            this.checkBoxfailed.Location = new System.Drawing.Point(7, 108);
             this.checkBoxfailed.Name = "checkBoxfailed";
             this.checkBoxfailed.Size = new System.Drawing.Size(64, 21);
             this.checkBoxfailed.TabIndex = 5;
@@ -76,15 +79,15 @@
             // 
             // richTextBoxReader
             // 
-            this.richTextBoxReader.Location = new System.Drawing.Point(230, 35);
+            this.richTextBoxReader.Location = new System.Drawing.Point(696, 13);
             this.richTextBoxReader.Name = "richTextBoxReader";
-            this.richTextBoxReader.Size = new System.Drawing.Size(558, 403);
+            this.richTextBoxReader.Size = new System.Drawing.Size(463, 640);
             this.richTextBoxReader.TabIndex = 6;
             this.richTextBoxReader.Text = "";
             // 
             // richTextBoxFileName
             // 
-            this.richTextBoxFileName.Location = new System.Drawing.Point(15, 90);
+            this.richTextBoxFileName.Location = new System.Drawing.Point(11, 58);
             this.richTextBoxFileName.Name = "richTextBoxFileName";
             this.richTextBoxFileName.ReadOnly = true;
             this.richTextBoxFileName.Size = new System.Drawing.Size(209, 44);
@@ -94,7 +97,7 @@
             // checkBoxHDD
             // 
             this.checkBoxHDD.AutoSize = true;
-            this.checkBoxHDD.Location = new System.Drawing.Point(23, 190);
+            this.checkBoxHDD.Location = new System.Drawing.Point(11, 135);
             this.checkBoxHDD.Name = "checkBoxHDD";
             this.checkBoxHDD.Size = new System.Drawing.Size(60, 21);
             this.checkBoxHDD.TabIndex = 8;
@@ -104,7 +107,7 @@
             // checkBoxUserSrc
             // 
             this.checkBoxUserSrc.AutoSize = true;
-            this.checkBoxUserSrc.Location = new System.Drawing.Point(23, 217);
+            this.checkBoxUserSrc.Location = new System.Drawing.Point(10, 162);
             this.checkBoxUserSrc.Name = "checkBoxUserSrc";
             this.checkBoxUserSrc.Size = new System.Drawing.Size(18, 17);
             this.checkBoxUserSrc.TabIndex = 9;
@@ -112,16 +115,49 @@
             // 
             // textBoxUserSrc
             // 
-            this.textBoxUserSrc.Location = new System.Drawing.Point(47, 217);
+            this.textBoxUserSrc.Location = new System.Drawing.Point(36, 162);
             this.textBoxUserSrc.Name = "textBoxUserSrc";
             this.textBoxUserSrc.Size = new System.Drawing.Size(177, 22);
             this.textBoxUserSrc.TabIndex = 10;
+            // 
+            // bSaveResults
+            // 
+            this.bSaveResults.Location = new System.Drawing.Point(15, 621);
+            this.bSaveResults.Name = "bSaveResults";
+            this.bSaveResults.Size = new System.Drawing.Size(99, 32);
+            this.bSaveResults.TabIndex = 11;
+            this.bSaveResults.Text = "Save Results";
+            this.bSaveResults.UseVisualStyleBackColor = true;
+            this.bSaveResults.Click += new System.EventHandler(this.bSaveResults_Click);
+            // 
+            // checkedListBoxST
+            // 
+            this.checkedListBoxST.FormattingEnabled = true;
+            this.checkedListBoxST.Items.AddRange(new object[] {
+            "Failed",
+            "failed",
+            "HDD"});
+            this.checkedListBoxST.Location = new System.Drawing.Point(23, 302);
+            this.checkedListBoxST.Name = "checkedListBoxST";
+            this.checkedListBoxST.Size = new System.Drawing.Size(197, 276);
+            this.checkedListBoxST.TabIndex = 12;
+            // 
+            // richTextBoxReader1
+            // 
+            this.richTextBoxReader1.Location = new System.Drawing.Point(267, 13);
+            this.richTextBoxReader1.Name = "richTextBoxReader1";
+            this.richTextBoxReader1.Size = new System.Drawing.Size(414, 640);
+            this.richTextBoxReader1.TabIndex = 13;
+            this.richTextBoxReader1.Text = "";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1181, 665);
+            this.Controls.Add(this.richTextBoxReader1);
+            this.Controls.Add(this.checkedListBoxST);
+            this.Controls.Add(this.bSaveResults);
             this.Controls.Add(this.textBoxUserSrc);
             this.Controls.Add(this.checkBoxUserSrc);
             this.Controls.Add(this.checkBoxHDD);
@@ -148,6 +184,9 @@
         private System.Windows.Forms.CheckBox checkBoxHDD;
         private System.Windows.Forms.CheckBox checkBoxUserSrc;
         private System.Windows.Forms.TextBox textBoxUserSrc;
+        private System.Windows.Forms.Button bSaveResults;
+        private System.Windows.Forms.CheckedListBox checkedListBoxST;
+        private System.Windows.Forms.RichTextBox richTextBoxReader1;
     }
 }
 
