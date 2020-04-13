@@ -38,148 +38,100 @@ namespace WindowsFormsApp1
         //Button to run report with/out search terms selected
         private void button1_Click(object sender, EventArgs e)
         {
-            string line; //Line in file
+  
             string line1; //Testing Checkbox List
-            //Search tearms holders
-            string src1 = "";
-            string src2 = "";
-            string src3 = "";
+
             
             List<string> searchItems = new List<string>();
-            List<string> fileLog = new List<string>();
+
+            List<Tuple<string, int>> searchItems1 = new List<Tuple<string, int>>();
+
+            Dictionary<string, int> searchItems2 = new Dictionary<string, int>();
 
             //Keeps location of line in file
-            int counter = 1; 
             int counter1 = 1;
 
-            int i = 0;
-            
-            //Total counters for search terms
-            int isfailedCounter = 0;
-            int isHDDCounter = 0;
-            int isUScounter = 0;
+         
 
-            ///////Using Check Box List Items ~~~~~ TEST~~~~~/////////////
+            ///////Using Check Box List Items
             foreach (object itemChecked in checkedListBoxST.CheckedItems)
             {
                 searchItems.Add(itemChecked.ToString());
 
                 
             }
-         
-            
-            using (StreamReader xr = new StreamReader(richTextBoxFileName.Text))
-            {
-                richTextBoxReader1.Text = "";
-                while ((line1 = xr.ReadLine()) != null)
-                {
-                    foreach(string item in searchItems)
-                    {
-                        if (line1.Contains(item))
-                            {
-                                richTextBoxReader1.Text = richTextBoxReader1.Text +
-                                item + "found at: " + counter1.ToString() + " || " + 
-                                line1 + "\n\n";
-                                counter1++;
-                            }
-                        else
-                        {
-                            counter1++;
-                        }
-                     
-                    }
-                   
-                    
-                        
-                }///end while reading file
 
-            }///End using StreamReader
-            
-
-            ///////End of using check box list
-        
-
-
-            if (checkBoxHDD.Checked)
-                src2 = "HDD";
-
-            if (checkBoxfailed.Checked)
-                src1 = "failed";
-            
+            //If any of the user check boxes are selected, this addes the text/term to the search list
             if (checkBoxUserSrc.Checked)
             {
-                src3 = textBoxUserSrc.Text;
+                searchItems.Add(textBoxUserSrc.Text);
             }
-           
+            if (checkBox1.Checked)
+            {
+                searchItems.Add(textBox1.Text);
+            }
+            if (checkBox2.Checked)
+            {
+                searchItems.Add(textBox2.Text);
+            }
+            if (checkBox3.Checked)
+            {
+                searchItems.Add(textBox3.Text);
+            }
+            if (checkBox4.Checked)
+            {
+                searchItems.Add(textBox4.Text);
+            }
+            if (checkBox5.Checked)
+            {
+                searchItems.Add(textBox5.Text);
+            }
 
-         //Using the 'basic check boxes'// 
-                using (StreamReader sr = new StreamReader(richTextBoxFileName.Text))
-                { 
-                    richTextBoxReader.Text = " ";
-                    while ((line = sr.ReadLine()) != null)
+        
+
+            //Error checks if a file is open or not
+            if (richTextBoxFileName.Text == "") // Bad file
+            {
+                richTextBoxReader1.Text = "Please open a file first";
+            }
+            if (richTextBoxFileName.Text != "")// Good File
+            {
+
+                //Reads file
+                using (StreamReader xr = new StreamReader(richTextBoxFileName.Text))
+                {
+                    richTextBoxReader1.Text = "";
+
+
+                    while ((line1 = xr.ReadLine()) != null)
                     {
-                        //Checks if failed is checked and searches for it
-                        if ((checkBoxfailed.Checked && line.Contains(src1)))
+                        if (searchItems.Count == 0)//Is anything selected?
                         {
-                            
-                            richTextBoxReader.Text = richTextBoxReader.Text + "Failed at: " + counter.ToString() + " || "+ line + "\n\n";
-                            
-                            counter++;
-                        isfailedCounter++;
+                            richTextBoxReader1.Text = "There is nothing selected. \n";
                         }
-                        //Checks if HDD is checked and searches for it
-                         else if ((checkBoxHDD.Checked && line.Contains(src2)))
+                        else
                         {
-                            richTextBoxReader.Text = richTextBoxReader.Text + "HDD at: " + counter.ToString() + " || " + line + "\n\n";
-                        
-                            counter++;
-                        isHDDCounter++;
+                            foreach (string item in searchItems)
+                            {
+                                if (line1.Contains(item))
+                                {
+                                    richTextBoxReader1.Text = richTextBoxReader1.Text +
+                                    item + " | found at: " + counter1.ToString() + " || " +
+                                    line1 + "\n\n";
+
+                                }
+                            }
                         }
-                        //Checks if User defined search term is checked and searches for it
-                        else if ((checkBoxUserSrc.Checked && line.Contains(src3)))
-                        {
-                            richTextBoxReader.Text = richTextBoxReader.Text + src3 + " found at: " + counter.ToString() + " || " + line + "\n\n";
-                            
-                            counter++;
-                            isUScounter++;
-                        }
-                        else 
-                            counter++;
+                        counter1++;
+                       
+                    }///end while reading file
 
-                        //If nothing is checked, display whole report
-                        if (!checkBoxfailed.Checked && !checkBoxHDD.Checked && !checkBoxUserSrc.Checked)
-                         {
-                                SetText(sr.ReadToEnd());
-                         }
-  
-                   
-                    } //end While traversing file
-          //Basic check boxes/////////////////
+                }///End using StreamReader
 
-         //Counters for each search term//
-
-                if (checkBoxfailed.Checked)
-                {
-                    richTextBoxReader.Text = richTextBoxReader.Text + "'failed found: " + isfailedCounter + " times\n";
-                }
-                if (checkBoxHDD.Checked)
-                {
-                    richTextBoxReader.Text = richTextBoxReader.Text + "'HDD found: " + isHDDCounter + " times\n";
-                }
-                if (checkBoxUserSrc.Checked)
-                {
-                    richTextBoxReader.Text = richTextBoxReader.Text + src3 + " found: " + isUScounter + " times\n";
-                }
-        ///////////////////////////////////
-
-
-                sr.Close(); // Closes file
-
-
-                } //end StreamReader
-               
-        }//End function
-
+            }// End of if statement that checks if a file is open
+          
+        }//End Button click function
+        
 
         private void openFileDialog1_FileOk_1(object sender, CancelEventArgs e)
         {
