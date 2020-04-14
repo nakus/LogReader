@@ -1,6 +1,7 @@
-﻿namespace WindowsFormsApp1
+﻿namespace LogReader
+
 {
-    partial class Form1
+    partial class MainPage
     {
         /// <summary>
         /// Required designer variable.
@@ -62,8 +63,7 @@
             // 
             // openFileDialog1
             // 
-            this.openFileDialog1.FileName = "openFileDialog1";
-            this.openFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.openFileDialog1_FileOk_1);
+            this.openFileDialog1.FileName = ".txt file";
             // 
             // button2
             // 
@@ -77,7 +77,7 @@
             // 
             // richTextBoxReader
             // 
-            this.richTextBoxReader.Location = new System.Drawing.Point(696, 13);
+            this.richTextBoxReader.Location = new System.Drawing.Point(696, 12);
             this.richTextBoxReader.Name = "richTextBoxReader";
             this.richTextBoxReader.Size = new System.Drawing.Size(463, 640);
             this.richTextBoxReader.TabIndex = 6;
@@ -218,7 +218,7 @@
             this.checkBox5.TabIndex = 22;
             this.checkBox5.UseVisualStyleBackColor = true;
             // 
-            // Form1
+            // MainPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -242,9 +242,9 @@
             this.Controls.Add(this.richTextBoxReader);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
-            this.Name = "Form1";
+            this.Name = "MainPage";
             this.Text = "Log Reader";
-            this.Load += new System.EventHandler(this.Form1_Load);
+            this.Load += new System.EventHandler(this.MainPage_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

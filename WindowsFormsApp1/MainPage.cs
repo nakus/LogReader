@@ -10,43 +10,42 @@ using System.Windows.Forms;
 using System.IO;
 using System.Security;
 
-namespace WindowsFormsApp1
+namespace LogReader
 {
     
-    public partial class Form1 : Form
+    public partial class MainPage : Form
     {
-        public Form1()
+        string file = "";
+        public MainPage()
         {
             InitializeComponent();
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void MainPage_Load(object sender, EventArgs e)
         {
            
         }
         private void SetText(string text)
         {
             richTextBoxReader.Text = text;
-            //richTextBoxReader1.Text = text;
+            
         }
 
         private void SetFileName(string fileName)
         {
             richTextBoxFileName.Text = fileName;
+            file = fileName;
         }
 
         //Button to run report with/out search terms selected
         private void button1_Click(object sender, EventArgs e)
         {
-  
-            string line1; //Testing Checkbox List
+           
+            string line1; //Line of the file
 
             
-            List<string> searchItems = new List<string>();
-
-            List<Tuple<string, int>> searchItems1 = new List<Tuple<string, int>>();
-
-            Dictionary<string, int> searchItems2 = new Dictionary<string, int>();
+            
+            List<SearchTerms> sTerms = new List<SearchTerms>();
 
             //Keeps location of line in file
             int counter1 = 1;
@@ -56,7 +55,7 @@ namespace WindowsFormsApp1
             ///////Using Check Box List Items
             foreach (object itemChecked in checkedListBoxST.CheckedItems)
             {
-                searchItems.Add(itemChecked.ToString());
+                sTerms.Add(new SearchTerms(itemChecked.ToString(), 0));
 
                 
             }
@@ -64,63 +63,69 @@ namespace WindowsFormsApp1
             //If any of the user check boxes are selected, this addes the text/term to the search list
             if (checkBoxUserSrc.Checked)
             {
-                searchItems.Add(textBoxUserSrc.Text);
+                if (textBoxUserSrc.Text !="" && !textBoxUserSrc.Text.StartsWith(" "))
+                    sTerms.Add(new SearchTerms(textBoxUserSrc.Text, 0));
+                
             }
             if (checkBox1.Checked)
             {
-                searchItems.Add(textBox1.Text);
+                if (textBox1.Text != "")
+                    sTerms.Add(new SearchTerms(textBox1.Text, 0));
             }
             if (checkBox2.Checked)
             {
-                searchItems.Add(textBox2.Text);
+                sTerms.Add(new SearchTerms(textBox2.Text, 0));
             }
             if (checkBox3.Checked)
             {
-                searchItems.Add(textBox3.Text);
+                sTerms.Add(new SearchTerms(textBox3.Text, 0));
             }
             if (checkBox4.Checked)
             {
-                searchItems.Add(textBox4.Text);
+                sTerms.Add(new SearchTerms(textBox4.Text, 0));
             }
             if (checkBox5.Checked)
             {
-                searchItems.Add(textBox5.Text);
+                sTerms.Add(new SearchTerms(textBox5.Text, 0));
             }
 
         
 
             //Error checks if a file is open or not
-            if (richTextBoxFileName.Text == "") // Bad file
+            if (file == "") // Bad file
             {
                 richTextBoxReader1.Text = "Please open a file first";
             }
-            if (richTextBoxFileName.Text != "")// Good File
+            if (file != "")// Good File
             {
 
                 //Reads file
-                using (StreamReader xr = new StreamReader(richTextBoxFileName.Text))
+                using (StreamReader xr = new StreamReader(file))
                 {
                     richTextBoxReader1.Text = "";
 
 
                     while ((line1 = xr.ReadLine()) != null)
                     {
-                        if (searchItems.Count == 0)//Is anything selected?
+                        if (sTerms.Count == 0)//Is anything selected?
                         {
                             richTextBoxReader1.Text = "There is nothing selected. \n";
                         }
                         else
                         {
-                            foreach (string item in searchItems)
+                            
+                            foreach (SearchTerms item in sTerms)
                             {
-                                if (line1.Contains(item))
+                                if (line1.Contains(item.term))
                                 {
-                                    richTextBoxReader1.Text = richTextBoxReader1.Text +
-                                    item + " | found at: " + counter1.ToString() + " || " +
+                                    richTextBoxReader1.Text += 
+                                    item.term + " | found at: " + counter1.ToString() + " || " +
                                     line1 + "\n\n";
-
+                                    item.number++;
                                 }
+
                             }
+ 
                         }
                         counter1++;
                        
@@ -128,27 +133,49 @@ namespace WindowsFormsApp1
 
                 }///End using StreamReader
 
+            //Counts the number of times a search term is found in the log
+            foreach (SearchTerms searchTerms in sTerms)
+                {
+                    if (searchTerms.term != "")
+                    {
+                        richTextBoxReader1.Text += searchTerms.term + " found " + 
+                            searchTerms.number + " number of times \n\n";
+                    }
+                }
+
+
             }// End of if statement that checks if a file is open
           
         }//End Button click function
         
 
-        private void openFileDialog1_FileOk_1(object sender, CancelEventArgs e)
-        {
-
-        }
-        
+   
         //Opens the file or log
         private void button2_Click(object sender, EventArgs e)
         {
+            string line ="";
+            int counter = 1;
+            richTextBoxReader.Text = " ";
+
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 try
                 {
-                    var sr = new StreamReader(openFileDialog1.FileName);
-                    SetText(sr.ReadToEnd());
+                    //var sr = new StreamReader(openFileDialog1.FileName);
+                    string file = openFileDialog1.FileName;
+                    using (StreamReader sr = new StreamReader(file))
+                    {
+
+
+                        //sr.ReadToEnd();
+                        richTextBoxReader.Text = sr.ReadToEnd();
+                        richTextBoxFileName.Text = file;
+                        SetFileName(file);
+
+                    }
+                    
                     //richTextBoxReader1.Text = sr.ReadToEnd();
-                    SetFileName(openFileDialog1.FileName);
+                    //SetFileName(openFileDialog1.FileName);
                 }
                 catch (SecurityException ex)
                 {
@@ -157,10 +184,7 @@ namespace WindowsFormsApp1
             }
         }
 
-        private void textBox2_TextChanged(object sender, EventArgs e)
-        {
-
-        }
+    
 
         //Exports results to a file
         private void bSaveResults_Click(object sender, EventArgs e)
