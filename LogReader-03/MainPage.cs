@@ -54,7 +54,9 @@ namespace LogReader
             //Keeps location of line in file
             int counter1 = 1;
 
-
+            //Initalize the search term library/list
+            sTerms.Clear();
+            
 
             ///////Using Check Box List Items
             foreach (object itemChecked in checkedListBoxST.CheckedItems)
@@ -111,7 +113,7 @@ namespace LogReader
                 using (StreamReader xr = new StreamReader(file))
                 {
                     richTextBoxReader1.Text = "";
-
+                    counter1 = 0;
 
                     while ((line1 = xr.ReadLine()) != null)
                     {
@@ -162,16 +164,18 @@ namespace LogReader
         private void button2_Click(object sender, EventArgs e)
         {
             string line = " ";
-            int counter = 1;
+            
             richTextBoxReader.Text = "";
-            bool x = true;
+            
+
+
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 try
                 {
                     //var sr = new StreamReader(openFileDialog1.FileName);
                     string file = openFileDialog1.FileName;
-                    string file1 = openFileDialog1.FileName;
+                    SetFileName(file);
 
                     StreamReader sr = new StreamReader(file);
                    // StreamReader streamReader = new StreamReader(file1);
@@ -196,22 +200,12 @@ namespace LogReader
 
 
                     richTextBoxReader.Text = builder.ToString();
-                       
-                            
-                        
-                  
-
-
-                       // richTextBoxReader.Text += counter + " " + sr.ReadLine() + "\n";
-                       // counter++;
-
-
-
-
+                    richTextBoxReader.Text += logFile.Count.ToString() + " lines long. \n\n";
                     
 
 
-                }
+
+                }//End try/opening of file
     
 
                 catch (SecurityException ex)
@@ -219,7 +213,9 @@ namespace LogReader
                     MessageBox.Show($"Security error. \n\n Error message:  {ex.Message} \n\n + $ Details: \n\n {ex.StackTrace}");
                 }
 
-                richTextBoxReader.Text += logFile.Count.ToString() + " lines long. \n\n";
+                
+                
+                
            
  
             }
@@ -253,5 +249,7 @@ namespace LogReader
         {
 
         }
+
+     
     }
  }

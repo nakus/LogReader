@@ -53,6 +53,7 @@
             this.ButConjun = new System.Windows.Forms.Button();
             this.ButRDup = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.SuspendLayout();
             // 
             // button1
@@ -71,7 +72,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(124, 99);
+            this.button2.Location = new System.Drawing.Point(123, 99);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(97, 39);
             this.button2.TabIndex = 3;
@@ -224,7 +225,7 @@
             // 
             // ButSettings
             // 
-            this.ButSettings.Location = new System.Drawing.Point(7, 12);
+            this.ButSettings.Location = new System.Drawing.Point(0, 38);
             this.ButSettings.Name = "ButSettings";
             this.ButSettings.Size = new System.Drawing.Size(70, 31);
             this.ButSettings.TabIndex = 24;
@@ -259,11 +260,22 @@
             this.button5.Text = "Highlight";
             this.button5.UseVisualStyleBackColor = true;
             // 
+            // toolStrip1
+            // 
+            this.toolStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.toolStrip1.Location = new System.Drawing.Point(0, 0);
+            this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.Size = new System.Drawing.Size(1181, 25);
+            this.toolStrip1.TabIndex = 28;
+            this.toolStrip1.Text = "toolStrip1";
+            
+            // 
             // MainPage
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(1181, 728);
+            this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.ButRDup);
             this.Controls.Add(this.ButConjun);
@@ -320,6 +332,7 @@
         private System.Windows.Forms.Button ButConjun;
         private System.Windows.Forms.Button ButRDup;
         private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.ToolStrip toolStrip1;
     }
 }
 
